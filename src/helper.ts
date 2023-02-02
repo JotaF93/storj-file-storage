@@ -61,5 +61,5 @@ export function removeSpaces(string: string) {
 
 //Generate  Key String
 export function generateKeyString(file: File, account: string) {
-	return `${removeSpaces(file.name)}_${account}_${file.size}`;
+	return `${account}_${file.size}_${removeSpaces(file.name)}`;
 }

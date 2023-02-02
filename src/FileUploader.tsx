@@ -13,8 +13,6 @@ function FileUploader({ account, contract }: any) {
 		if (!file) {
 			return;
 		}
-		console.log(file);
-
 		mint(contract, account, file);
 	};
 

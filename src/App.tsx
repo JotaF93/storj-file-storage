@@ -71,7 +71,7 @@ const App = () => {
 						</Typography>
 						<Box sx={{ display: { xs: 'none', sm: 'block' } }}>
 							{navItems.map((item) => (
-								<Link to={item.to}>
+								<Link to={item.to} style={{ textDecoration: 'none' }}>
 									<Button key={item.name} sx={{ color: '#000' }}>
 										{item.name}
 									</Button>
