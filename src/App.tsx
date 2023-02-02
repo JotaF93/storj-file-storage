@@ -4,13 +4,14 @@ import FileUploader from './FileUploader';
 import ListUploads from './ListUploads';
 import Web3 from 'web3';
 import FileStorage from './abis/FileStorage.json';
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
 
 const App = () => {
 	const [account, setAccount] = useState('');
 	const [contract, setContract] = useState(null);
 	const [totalSupply, setTotalSupply] = useState(0);
 	const [files, setFiles] = useState([{}]);
-
 	const loadWeb3 = async () => {
 		if (window.ethereum) {
 			window.web3 = new Web3(window.ethereum);
@@ -52,14 +53,53 @@ const App = () => {
 		loadBlockchainData();
 	}, []);
 
+	const navItems = [
+		{ name: 'List', to: '/' },
+		{ name: 'Upload', to: '/upload' },
+	];
+
 	return (
-		<div className='App'>
-			<header className='App-header'>
-				Storj - File storage
-				<FileUploader contract={contract} account={account} />
-				<ListUploads files={files} contract={contract} account={account} />
-			</header>
-		</div>
+		<BrowserRouter>
+			<div className='App'>
+				<AppBar component='nav' color='inherit'>
+					<Toolbar>
+						<Typography
+							variant='h6'
+							component='div'
+							sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+							Storj - File storage
+						</Typography>
+						<Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+							{navItems.map((item) => (
+								<Link to={item.to}>
+									<Button key={item.name} sx={{ color: '#000' }}>
+										{item.name}
+									</Button>
+								</Link>
+							))}
+						</Box>
+					</Toolbar>
+				</AppBar>
+				<div className='App-header'>
+					<Routes>
+						<Route
+							path='/upload'
+							element={<FileUploader contract={contract} account={account} />}
+						/>
+						<Route
+							path='/'
+							element={
+								<ListUploads
+									files={files}
+									contract={contract}
+									account={account}
+								/>
+							}
+						/>
+					</Routes>
+				</div>
+			</div>
+		</BrowserRouter>
 	);
 };
 

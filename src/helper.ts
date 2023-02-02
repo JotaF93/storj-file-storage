@@ -30,9 +30,6 @@ export async function mint(contract: any, account: string, file: File) {
 
 	const storeFiles = async (file: File, account: string) => {
 
-		console.log({file});
-		
-
 		const params = {
 			Bucket: process.env.REACT_APP_BUCKET || '',
 			Key: generateKeyString(file, account),
